@@ -3,7 +3,6 @@ const { UniqueConstraintError, ValidationError } = require('sequelize')
 const { Book, User, Review } = require('../db/sequelizeSetup')
 
 const findAllBooks = (req, res) => {
-     // paramètre optionnel qui permet d'ajouter les données relatives aux commentaires d'un book
     Book.findAll({ include: [Review, User] })
         .then((results) => {
             res.json(results)
