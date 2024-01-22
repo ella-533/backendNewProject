@@ -8,19 +8,9 @@ const port = process.env.PORT || 3005
 app.use(express.json())
 app.use(cors())
 app.use(morgan('dev'))
-// app.use(cookieParser())
 
 app.get('/', (req, res) => {
-    // Exemple d'un cookie de première visite d'un site
 
-    // console.log(req.cookies)
-    // res.cookie('monapirest_estdejavenu', true)
-    // if (req.cookies.monapirest_estdejavenu) {
-    //     res.json('Hello World !')
-    // } else {
-    //     res.json('Salut tu es nouveau !')
-    // }
- 
     console.log(req);
 
     res.json('Hello World !')
@@ -29,8 +19,6 @@ app.get('/', (req, res) => {
 
 app.put('/api/users/:userId', async (req, res) => {
     try {
-      // Logic to update password
-      // ...
   
       res.json({ message: 'Password updated successfully' });
     } catch (error) {

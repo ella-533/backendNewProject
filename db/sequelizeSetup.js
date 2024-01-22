@@ -5,16 +5,16 @@ const { Sequelize, DataTypes } = require('sequelize');
 const reviewModel = require('../models/reviewModel');
 const {setBooks, setUsers, setRoles } = require('../db/setDataSample')
 const sequelize = new Sequelize(
-    'ellalibrary',
+    'ella_library',
     'root',
     '',
     {
         host: 'localhost',
-        dialect: 'mysql',
+        dialect: 'mariadb',
         logging: false
     }
 )
-// 
+
 
 const Role = RoleModel(sequelize, DataTypes)
 const User = UserModel(sequelize, DataTypes)

@@ -41,6 +41,7 @@ const login = (req, res) => {
 }
 
 const protect = (req, res, next) => {
+    console.log('protect')
     if (!req.headers.authorization) {
         return res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
     }
@@ -54,7 +55,11 @@ const protect = (req, res, next) => {
     if (token) {
         try {
             const decoded = jwt.verify(token, SECRET_KEY);
-            req.username = decoded.data
+          //  req.username = decoded.data
+            req.username = decoded.data.username
+            req.role = decoded.data.role
+            req.dataId = decoded.data.dataId
+            console.log(decoded.data)
             next()
         } catch (error) {
             return res.status(403).json({ message: `Le token n'est pas valide.` })
@@ -65,6 +70,8 @@ const protect = (req, res, next) => {
 // Ajouter le paramètre roleParam
 const restrict = (roleParam) => {
     return (req, res, next) => {
+        console.log(req.username);
+        console.log('test username');
         User.findOne({
             where: {
                 username: req.username
@@ -72,10 +79,13 @@ const restrict = (roleParam) => {
              
         })
             .then(user => { 
+                console.log(user)
                 Role.findByPk(user.RoleId)
                     .then(role => {
+                        console.log(role)
                         // role.label est le rôle issu du token
                         // roleParam est le paramètre de la fonction restrict()
+
                         if (rolesHierarchy[role.label].includes(roleParam)) {
                             next()
                         } else {
@@ -83,10 +93,12 @@ const restrict = (roleParam) => {
                         }
                     })
                     .catch(error => {
+                        console.log('err');
                         console.log(error.message)
                     })
             })
             .catch(error => {
+                console.log('err2');
                 console.log(error)
             })
     }

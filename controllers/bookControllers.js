@@ -67,7 +67,7 @@ const updateBook = (req, res) => {
         .then((result) => {
             if (result) {
                 console.log('test')
-                return result.update({ ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/uploadedFiles/${req.file.filename}` })
+                return result.update({ ...req.body })
                     .then(() => {
                         res.status(201).json({ message: 'Le book a bien été mis à jour.', data: result })
                     })
